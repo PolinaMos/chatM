@@ -1,0 +1,37 @@
+(function(){
+'use strict';
+
+angular
+	.module('chatM')
+	.service('MessageService', creatChat);
+
+
+	function creatChat($http, $q) {
+      var messagesData = [];
+
+      this.getMessage = function() {
+           return $http.get('src/assets/fakeData/fakeMessages.json').then(success, error);
+      };
+
+      this.sendMessage = function (timeStamp, textMessage, userName) {
+        $http.get('src/assets/fakeData/send.json', {
+            params:  {timestamp: timeStamp, msg: textMessage, user: userName}
+        });
+      };
+
+      function success(response) {
+        var responseData = response.data;
+        var i;
+        var n;
+        for (n = responseData.length, i = 0; i < n; i += 1) {
+          messagesData.push(responseData[i]);
+        }
+        return messagesData;
+      }
+      function error(response) {
+        return "Error: " + response.status + " " + response.statusText;
+      }
+
+    }
+
+})();
