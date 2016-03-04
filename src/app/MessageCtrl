@@ -1,0 +1,35 @@
+(function(){
+'use strict';
+
+angular
+  .module('chatM')
+  .controller('messageCtrl', chatCtrl);
+
+  function chatCtrl($scope, $http, MessageService){
+    var chatUser='Me';
+	$scope.somePlaceholder = 'Message';
+  	 $scope.messageData;
+        MessageService.getMessage().then(function(response) {
+        $scope.messageData = response;
+		});
+      
+	  
+	  $scope.sendMessage = function(yourText) {
+		  if(yourText == null || yourText == ""){
+			  $scope.somePlaceholder = 'Enter a text';
+		  }else{
+			  MessageService.sendMessage(new Date().getTime(), yourText, chatUser);
+			  var b = {timestamp: new Date().getTime(), msg: yourText, user: chatUser}
+			  $scope.messageData.push(b);
+		  }
+    }
+    
+    $scope.checkUser = function(author){
+       if (author === 'Me') {
+        return true
+       } else{
+        return false
+       }
+    }
+  }
+})();
