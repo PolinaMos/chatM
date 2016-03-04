@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang = "en" ng-app = "chatM" >
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>mobileApp</title>
+  <!-- bower:css -->
+  <link rel="stylesheet" href="/bower/Materialize/bin/materialize.css">
+  <!-- endinject -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/src/assets/styles/styles.css">
+  <!-- endinject -->
+</head>
+<body ng-controller="messageCtrl">
+<header class="deep-purple lighten-1">
+ 
+</header>
+<main >
+  <div class="container">
+   <div class="message-wrapper" ng-repeat="data in messageData | orderBy:'timestamp'">
+      <div  ng-class="checkUser(data.user)? 'message-outcoming':'message-incoming'">
+        <span class="message-text">
+          {{data.msg}}
+        </span>
+        <div class="message-info">
+        <span class="message-author">
+          {{data.user}}
+        </span>
+        <span class="message-time">
+           {{data.timestamp | date:'HH:mm'}} 
+        </span>
+        </div>
+      </div>  
+    </div>
+  </div>
+
+</main>
+<footer class="deep-purple lighten-1">
+    <form  name="msgForm" >
+          <textarea type="text" id="message-input"  ng-model="msgText" placeholder="{{somePlaceholder}}"></textarea>
+          <input  type="button" value="Send" ng-click="sendMessage(msgText)">
+    </form>
+  </footer>
+  
+
+  
+
+ 
+
+  <!-- bower:js -->
+  <script src="/bower/jquery/dist/jquery.js"></script>
+  <script src="/bower/angular/angular.js"></script>
+  <script src="/bower/Materialize/bin/materialize.js"></script>
+  <!-- endinject -->
+
+  <!-- inject:js -->
+  <script src="/src/app/app.module.js"></script>
+  <script src="/src/app/MessageService.js"></script>
+  <script src="/src/app/MessageCtrl.js"></script>
+  <!-- endinject -->
+</body>
+</html>
